@@ -34,50 +34,7 @@ public class KafkaProducerService {
         return configUtility.getProperty(KAFKA_TOPIC_NAME);
     }
 
-    public void sendEventsToTopic(Customer customer) {
-        try {
-            publishMessages(customer);
-
-        } catch (Exception ex) {
-
-            log.error("Exception : getTopicName :{} ", ex.getMessage());
-        }
-    }
-
-    public void sendMessageToTopic(String message) {
-        CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(getTopicName(), message);
-        future.whenComplete((result, ex) -> {
-            if (Objects.isNull(ex)) {
-                log.info("Sent message=[ {}] with offset=[ {} ]", result.toString(), result.getRecordMetadata().offset());
-            } else {
-                log.info("Unable to send message=[ {} ] due to : {} ", message, ex.getMessage());
-            }
-        });
-
-    }
 
 
-    public void sendEventsToTopicFromFiles(String urlString) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            List<Customer> customersList = objectMapper.readValue(new URL(urlString), new TypeReference<List<Customer>>() {
-            });
-            customersList.forEach(this::publishMessages);
-        } catch (Exception ex) {
-            log.error("Exception : sendEventsToTopicFromFiles :{} ", ex.getMessage());
-
-        }
-    }
-
-    private void publishMessages(Customer customer) {
-        CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(getTopicName(), customer);
-        future.whenComplete((result, ex) -> {
-            if (ex == null) {
-                log.info("Sent message=[ {}] with offset=[ {} ]", customer.toString(), result.getRecordMetadata().offset());
-            } else {
-                log.info("Unable to send message=[ {} ] due to : {} ", customer.toString(), ex.getMessage());
-            }
-        });
-    }
 
 }

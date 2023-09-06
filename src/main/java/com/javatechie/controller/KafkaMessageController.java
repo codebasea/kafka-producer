@@ -31,22 +31,9 @@ public class KafkaMessageController {
         return "Successfully Published the Animal = '" + animal + "' to the AnimalTopic";
     }
 
-    @PostMapping("/publish/customer")
-    public void sendEvents(@RequestBody Customer customer) {
-        kafkaProducerService.sendEventsToTopic(customer);
-    }
 
-    @GetMapping("/publish/{message}")
-    public ResponseEntity publishMessage(@PathVariable String message) {
-        try {
-            for (int i = 0; i <= 100000; i++) {
-                kafkaProducerService.sendMessageToTopic(message + " : " + i);
-            }
-            return ResponseEntity.ok("message published successfully ..");
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+
+
 
     @PostMapping(value = "/urlpath", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity publishMessageFromFiles(@RequestBody KafkaRequestBody kafkaRequestBody) {
