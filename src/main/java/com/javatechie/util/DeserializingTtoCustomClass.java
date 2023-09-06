@@ -64,6 +64,7 @@ public class DeserializingTtoCustomClass {
         for (Customer customer : customers) {
             if (IS_VALID_CUSTOMERID.test(customer)) {
                 System.out.println(customer);
+                System.out.println(customer);
             }
         }
 
