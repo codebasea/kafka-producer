@@ -27,3 +27,14 @@
 .idea/.gitignore
 *.iml
 *.bak
+
+*.jar
+*.class
+/lib/
+/classes/
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+
+*mvnw
