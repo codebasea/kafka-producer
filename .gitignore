@@ -27,3 +27,5 @@
 .idea/.gitignore
 *.iml
 *.bak
+*.cmd
+mvnw
